@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+
+	<display-name>ecmproxy</display-name>
+
+	<servlet>
+		<servlet-name>HcpCmisProxy</servlet-name>
+		<servlet-class>ecmproxy.cmis.HcpCmisProxy</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HcpCmisProxy</servlet-name>
+		<url-pattern>/cmis/*</url-pattern>
+	</servlet-mapping>
+
+	<resource-ref>
+		<res-ref-name>CmisService</res-ref-name>
+		<res-type>com.sap.ecm.api.EcmService</res-type>
+	</resource-ref>
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+	</login-config>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Protected Area - CMIS</web-resource-name>
+			<url-pattern>/cmis/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>CMIS</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Protected Area - Everyone</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Everyone</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+</web-app>
